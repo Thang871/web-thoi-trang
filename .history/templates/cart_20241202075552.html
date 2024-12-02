@@ -1,0 +1,66 @@
+from flask import Flask, render_template, session, redirect, url_for
+
+app = Flask(__name__)
+app.secret_key = 'your_secret_key'  # Mã bí mật cho session
+
+# Dữ liệu sản phẩm mẫu
+products = [
+    {'id': 1, 'name': 'Đầm Dạ Hội', 'description': 'Đầm phong cách tôi giản, form dáng theo phong cách Châu Âu.', 'price': 150000, 'image': 'dress.jpg'},
+    {'id': 2, 'name': 'Aó Thun Unisex', 'description': 'Aó thun cao cấp với chất liệu cotton mềm mịn thoải mái.', 'price': 85000, 'image': 'tshirt.jpg'},
+    {'id': 3, 'name': 'Quần Jeans', 'description': 'Quần Jeans cao cấp co giản 4 chiều cực đẹp.', 'price': 100000, 'image': 'jeans.jpg'}
+]
+
+@app.route('/')
+def home():
+    return render_template('products.html', products=products)
+
+@app.route('/add_to_cart/<int:product_id>')
+def add_to_cart(product_id):
+    product = next((prod for prod in products if prod['id'] == product_id), None)
+    if product:
+        cart = session.get('cart', [])
+        cart.append(product)
+        session['cart'] = cart
+    return redirect(url_for('home'))
+
+@app.route('/cart')
+def cart():
+    cart_items = session.get('cart', [])
+    total_price = sum(item['price'] for item in cart_items)
+    return render_template('cart.html', cart_items=cart_items, total_price=total_price)
+
+@app.route('/checkout')
+def checkout():
+    return render_template('checkout.html')
+
+@app.route('/account')
+def account():
+    return render_template('account.html')
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=5000)
+đây alf code app.py
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ Hàng</title>
+    <style>
+        .cart-item img {
+            max-width: 100px;
+            height: auto;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        .total {
+            font-size: 1.4em;
+            font-weight: bold;
+            color:#e91e63; } </style> </head> <body> <h1>Giỏ hàng</h1> {% if cart_items %} <div class="cart-container"> {% for item in cart_items %} <div class="cart-item"> <img src="{{ url_for('static', filename='images/' + item['image']) }}" alt="{{ item['name'] }}"> <div> <h3>{{ item['name'] }}</h3> <p>{{ item['description'] }}</p> </div> <div> <p class="price">{{ item['price'] }} VND</p> </div> </div> {% endfor %} <div class="total"> Tổng cộng: {{ total_price }} VND </div> </div> {% else %} <p>Giỏ hàng của bạn đang trống.</p> {% endif %} <a href="{{ url_for('home') }}">Quay lại trang chủ</a> </body> </html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ Hàng</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1em;
+        }
+        .cart-container {
+            padding: 20px;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .cart-item h3 {
+            color: #333;
+        }
+        .cart-item p {
+            color: #777;
+        }
+        .total {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #e91e63;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>Giỏ Hàng</h1>
+    </header>
+
+    <!-- Cart Content -->
+    <div class="cart-container">
+        {% if cart_items %}
+            {% for item in cart_items %}
+            <div class="cart-item">
+                <h3>{{ item.name }} (x{{ item.quantity }})</h3>
+                <p>{{ item.price | format_price }} VND</p>
+                <p>{{ item.total

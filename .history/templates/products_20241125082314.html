@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Products</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .product {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .product img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            margin-right: 20px;
+        }
+        .product-info {
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chào bạn đến với trang WEB THỜI TRANG</h1>
+    
+    <div class="product">
+        <img src="{{ url_for('static', filename='images/tshirt.jpg') }}" alt="T-shirt">
+        <div class="product-info">
+            <h2>T-shirt</h2>
+            <p>Price: $20</p>
+        </div>
+    </div>
+    
+    <div class="product">
+        <img src="{{ url_for('static', filename='images/jeans.jpg') }}" alt="Jeans">
+        <div class="product-info">
+            <h2>Jeans</h2>
+            <p>Price: $40</p>
+        </div>
+    </div>
+
+    <div class="product">
+        <img src="{{ url_for('static', filename='images/dress.jpg') }}" alt="Dress">
+        <div class="product-info">
+            <h2>Dress</h2>
+            <p>Price: $50</p>
+        </div>
+    </div>
+    
+</body>
+</html>

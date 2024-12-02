@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh Toán Thành Công</title>
+</head>
+<body>
+    <h1>Thanh Toán Thành Công!</h1>
+
+    {% if success %}
+    <p>Cảm ơn bạn đã mua sắm tại cửa hàng chúng tôi. Đơn hàng của bạn đã được thanh toán thành công!</p>
+    <p><strong>Đơn hàng của bạn:</strong></p>
+    <ul>
+        {% for item in cart_items %}
+        <li>{{ item['name'] }} - {{ item['price'] }} VND</li>
+        {% endfor %}
+    </ul>
+    <p>Tổng cộng: {{ total_price }} VND</p>
+    {% else %}
+    <p>Giỏ hàng của bạn hiện tại trống. Vui lòng quay lại để thêm sản phẩm vào giỏ hàng.</p>
+    {% endif %}
+
+    <a href="/">Tiếp tục mua sắm</a>
+</body>
+</html>

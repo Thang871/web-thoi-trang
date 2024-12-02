@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Fashion Products</title>
+    <style>
+        /* Các kiểu CSS vẫn giữ nguyên, không thay đổi */
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Chào mừng bạn đến với trang WEB THỜI TRANG</h1>
+
+        <!-- Hamburger Menu -->
+        <span class="menu-icon" onclick="toggleCart()">&#9776;</span>
+        <!-- Nút Giỏ hàng -->
+        <a href="{{ url_for('cart') }}" style="float:right; color:white; text-decoration:none;">Giỏ hàng</a>
+    </header>
+
+    <!-- Product Grid -->
+    <div class="product-container">
+        {% for product in products %}
+        <div class="product">
+            <img src="{{ url_for('static', filename='images/' + product['image']) }}" alt="{{ product['name'] }}">
+            <h3>{{ product['name'] }}</h3>
+            <p>{{ product['description'] }}</p>
+            <p class="price">{{ product['price'] }} VND</p>
+            <a href="{{ url_for('add_to_cart', product_id=product['id']) }}" class="btn-add-to-cart">Thêm Giỏ Hàng</a>
+            <!-- Thêm Nút Mua Sản Phẩm -->
+            <a href="{{ url_for('add_to_cart', product_id=product['id']) }}" class="btn-add-to-cart" style="background-color: #ff5722;">Mua Sản Phẩm</a>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Cart Popup -->
+    <div id="cartPopup" class="cart-popup">
+        <span class="close-btn" onclick="toggleCart()">&times;</span>
+        <h2>Giỏ Hàng</h2>
+        <div class="cart-container">
+            {% if cart_items %}
+                {% for item in cart_items %}
+                <div class="cart-item">
+                    <img src="{{ url_for('static', filename='images/' + item['image']) }}" alt="{{ item['name'] }}">
+                    <div>
+                        <h3>{{ item['name'] }}</h3>
+                        <p>{{ item['description'] }}</p>
+                    </div>
+                    <div>
+                        <p class="price">{{ item['price'] }} VND</p>
+                    </div>
+                </div>
+                {% endfor %}
+                <div class="total">
+                    Tổng cộng: {{ total_price }} VND
+                </div>
+                <a href="{{ url_for('cart') }}" class="btn-back">Xem Giỏ Hàng</a>
+            {% else %}
+                <p>Giỏ hàng của bạn hiện tại trống.</p>
+                <a href="{{ url_for('home') }}" class="btn-back">Quay lại mua sắm</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        // Hàm mở hoặc đóng giỏ hàng
+        function toggleCart() {
+            var cartPopup = document.getElementById('cartPopup');
+            cartPopup.classList.toggle('open');
+        }
+    </script>
+
+</body>
+</html>

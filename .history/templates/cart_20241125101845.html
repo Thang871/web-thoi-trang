@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giỏ Hàng</title>
+</head>
+<body>
+    <h1>Giỏ Hàng</h1>
+
+    {% if cart_items %}
+        {% for item in cart_items %}
+        <div>
+            <img src="{{ url_for('static', filename='images/' + item['image']) }}" alt="{{ item['name'] }}">
+            <h3>{{ item['name'] }}</h3>
+            <p>{{ item['description'] }}</p>
+            <p>{{ item['price'] }} VND</p>
+        </div>
+        {% endfor %}
+        <div>
+            <p>Tổng cộng: {{ total_price }} VND</p>
+            <a href="{{ url_for('checkout') }}">Thanh toán</a>
+        </div>
+    {% else %}
+        <p>Giỏ hàng của bạn hiện tại trống. Vui lòng quay lại để thêm sản phẩm vào giỏ hàng.</p>
+    {% endif %}
+
+</body>
+</html>
